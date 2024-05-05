@@ -1,4 +1,4 @@
-import { Routes } from '@/interfaces/routes.interface';
+import { Routes } from '../interfaces/routes.interface';
 import { Application } from 'express';
 
 class RoutesMain {
@@ -6,7 +6,7 @@ class RoutesMain {
 	constructor() {}
 	public initializeAllRoutes(app: Application) {
 		this.routes.forEach((route) => {
-			app.use('/api/', route.router);
+			app.use('/api-gateway/', route.router);
 		});
 	}
 }

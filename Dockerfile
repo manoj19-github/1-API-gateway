@@ -14,7 +14,7 @@ COPY .npmrc ./
 
 COPY src ./src
 
-COPY tools ./tools
+# COPY tools ./tools
 
 RUN npm install -g npm@latest
 

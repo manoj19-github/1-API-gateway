@@ -12,7 +12,7 @@ COPY .npmrc ./
 
 COPY src ./src
 
-COPY tools ./tools
+# COPY tools ./tools
 
 RUN ls -a
 
@@ -31,4 +31,4 @@ CMD ["npm","run","dev"]
 
 
 # Run
-CMD [ "npm", "start" ]
+# CMD [ "npm", "start" ]
