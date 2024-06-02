@@ -1,7 +1,7 @@
 import 'express-async-errors';
 import cors from 'cors';
 import { config } from 'dotenv';
-import express, { Application, Request, Response, json, urlencoded } from 'express';
+import express, { Application, Request, Response, json, urlencoded,NextFunction } from 'express';
 import helmet from 'helmet';
 import http from 'http';
 import morgan from 'morgan';
@@ -18,6 +18,8 @@ import { checkElasticSearchConnection } from './config/elasticSearch.config';
 import { winstonLogger } from '@manoj19-github/microservice_shared';
 import hpp from 'hpp';
 import compression from 'compression';
+import { AuthRequest } from './request/auth.request';
+import { AuthMiddleware } from './middlewares/auth-middleware';
 config();
 class APIGatewayServer {
 	private app: Application;
@@ -47,6 +49,7 @@ class APIGatewayServer {
 
 		this.app.use(helmet());
 		this.app.use(morgan('dev'));
+		this.app.use(AuthMiddleware.attachAuthToken)
 	}
 	private standardMiddleware():void{
 		this.app.use(compression());

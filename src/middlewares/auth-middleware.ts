@@ -2,10 +2,11 @@ import { BadRequestError, IAuthPayload, NotAuthorizedError } from "@manoj19-gith
 import { NextFunction, Response,Request } from "express";
 import JWT from "jsonwebtoken"
 import { EnvVariable } from "../config/envVariable";
+import { AuthRequest } from "../request/auth.request";
 
 
-class AuthMiddleware{
-    public verifyUser(request:Request,res:Response,next:NextFunction):void{
+export class AuthMiddleware{
+    public static verifyUser(request:Request,res:Response,next:NextFunction):void{
         try{
             if(!request.session?.jwt) throw new NotAuthorizedError("Token not avilable. Please login again","Gateway service verifyuser method error");
             const payload:IAuthPayload = JWT.verify(request.session.jwt,`${EnvVariable.JWT_TOKEN}`) as IAuthPayload;
@@ -20,7 +21,7 @@ class AuthMiddleware{
     }
 
     // check authentication 
-    public checkAuthentication(request:Request,res:Response,next:NextFunction):void{
+    public static checkAuthentication(request:Request,res:Response,next:NextFunction):void{
         try{
             if(!request?.currentUser) throw new BadRequestError("Authentication is required to access this route","gateway service check authentication method error")
                 
@@ -32,6 +33,13 @@ class AuthMiddleware{
         }
 
     }
+    // attach authtoken
+    public static attachAuthToken(request:Request,res:Response,next:NextFunction):void{
+        if(request.session?.jwt){
+            AuthRequest.axiosAuthInstance.defaults.headers["Authorization"] = `Bearer ${request.session.jwt}`
+        }
+        next();
+    }
 
 }
-export const authMiddleware:AuthMiddleware = new AuthMiddleware();
+

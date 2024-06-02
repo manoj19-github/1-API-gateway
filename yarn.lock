@@ -1171,10 +1171,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@manoj19-github/microservice_shared@^0.0.73":
-  version "0.0.73"
-  resolved "https://npm.pkg.github.com/download/@manoj19-github/microservice_shared/0.0.73/546e34dd45de26b1af03aeec3a182745201f5208"
-  integrity sha512-N+NsgJNiXUH7+9nCEB4d2oePOZwyVPR3iAi7VjosqnXowygYVL/CKJdaSYIb+EgaqUH+CXTyuxTTwnQA6Bj+ag==
+"@manoj19-github/microservice_shared@^0.0.75":
+  version "0.0.75"
+  resolved "https://npm.pkg.github.com/download/@manoj19-github/microservice_shared/0.0.75/2f70bee5c8182fee4ab4a254dc4d9fcdf04477aa"
+  integrity sha512-E0GAnbG2FPI73RrMyHdDhTgYE5Yi0Ix+ikIoJkTKVIi3geN8YtHFr7MuN19HjQZJ+sIBF7MegcvjLYBs33xh8g==
   dependencies:
     "@elastic/elasticsearch" "^8.13.0"
     cloudinary "^2.2.0"
