@@ -18,7 +18,6 @@ import { checkElasticSearchConnection } from './config/elasticSearch.config';
 import { winstonLogger } from '@manoj19-github/microservice_shared';
 import hpp from 'hpp';
 import compression from 'compression';
-import { AuthRequest } from './request/auth.request';
 import { AuthMiddleware } from './middlewares/auth-middleware';
 config();
 class APIGatewayServer {

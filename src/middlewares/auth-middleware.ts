@@ -2,7 +2,8 @@ import { BadRequestError, IAuthPayload, NotAuthorizedError } from "@manoj19-gith
 import { NextFunction, Response,Request } from "express";
 import JWT from "jsonwebtoken"
 import { EnvVariable } from "../config/envVariable";
-import { AuthRequest } from "../request/auth.request";
+import { AuthService } from "src/services/authService.service";
+
 
 
 export class AuthMiddleware{
@@ -36,7 +37,7 @@ export class AuthMiddleware{
     // attach authtoken
     public static attachAuthToken(request:Request,res:Response,next:NextFunction):void{
         if(request.session?.jwt){
-            AuthRequest.axiosAuthInstance.defaults.headers["Authorization"] = `Bearer ${request.session.jwt}`
+            AuthService.axiosAuthInstance.defaults.headers["Authorization"] = `Bearer ${request.session.jwt}`
         }
         next();
     }

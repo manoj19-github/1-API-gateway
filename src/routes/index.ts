@@ -1,12 +1,14 @@
 import { Routes } from '../interfaces/routes.interface';
-import { Application } from 'express';
+import { Application, Router } from 'express';
+import { AuthRoutes } from './auth.route';
 
-class RoutesMain {
-	private routes: Routes[] = []; // add all routes  here
+class RoutesMain  {
+	private routes: Routes[] = [new AuthRoutes()]; // add all routes  here
+	private path=`/api/gateway/v1`
 	constructor() {}
 	public initializeAllRoutes(app: Application) {
 		this.routes.forEach((route) => {
-			app.use('/api-gateway/', route.router);
+			app.use(`${this.path}`, route.router);
 		});
 	}
 }
