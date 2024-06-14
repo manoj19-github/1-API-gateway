@@ -17,6 +17,7 @@ export class AuthService{
         return await AuthService.axiosAuthInstance.put(`/change-password`,{currentPassword,newPassword});  
     }
     public static async signup(body:IAuth):Promise<AxiosResponse>{
+        
         return await AuthService.axiosAuthInstance.post(`/signup`,body);  
     }
     public static async signin(body:IAuth):Promise<AxiosResponse>{
@@ -24,6 +25,9 @@ export class AuthService{
     }
     public static async resendEmail({userId,email}:{userId:string,email:string}):Promise<AxiosResponse>{
         return await AuthService.axiosAuthInstance.post(`/resend-email`,{userId,email});  
+    }
+    public static async verifyEmail(token:string):Promise<AxiosResponse>{
+        return await AuthService.axiosAuthInstance.put(`/verify-email`,{token});  
     }
     public static async forgotPassword(email:string):Promise<AxiosResponse>{
         return await AuthService.axiosAuthInstance.put(`/forgot-password`,{email});  

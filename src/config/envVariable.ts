@@ -23,4 +23,5 @@ export class EnvVariable {
 	public static ORDER_BASE_URL = process.env.ORDER_BASE_URL;
 	public static REVIEW_BASE_URL = process.env.REVIEW_BASE_URL;
 	public static REDIS_HOST = process.env.REDIS_HOST;
+	public static EMAIL_REGEX:RegExp=/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 }

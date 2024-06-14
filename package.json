@@ -6,9 +6,12 @@
 	"license": "MIT",
 	"dependencies": {
 		"@elastic/elasticsearch": "^8.13.1",
-		"@manoj19-github/microservice_shared": "^0.0.75",
+		"@manoj19-github/microservice_shared": "0.0.79",
 		"axios": "^1.6.8",
 		"bcrypt": "^5.1.1",
+		"class-sanitizer": "^1.0.1",
+		"class-transformer": "^0.5.1",
+		"class-validator": "^0.14.1",
 		"compression": "^1.7.4",
 		"cookie-session": "^2.1.0",
 		"cors": "^2.8.5",
