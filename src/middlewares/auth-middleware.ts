@@ -1,46 +1,40 @@
-import { BadRequestError, IAuthPayload, NotAuthorizedError } from "@manoj19-github/microservice_shared";
-import { NextFunction, Response,Request } from "express";
-import JWT from "jsonwebtoken"
-import { EnvVariable } from "../config/envVariable";
-import { AuthService } from "src/services/authService.service";
+import { BadRequestError, IAuthPayload, NotAuthorizedError } from '@manoj19-github/microservice_shared_lib';
+import { NextFunction, Response, Request } from 'express';
+import JWT from 'jsonwebtoken';
+import { EnvVariable } from '../config/envVariable';
+import { AuthService } from 'src/services/authService.service';
 
+export class AuthMiddleware {
+	public static verifyUser(request: Request, res: Response, next: NextFunction): void {
+		try {
+			if (!request.session?.jwt)
+				throw new NotAuthorizedError('Token not avilable. Please login again', 'Gateway service verifyuser method error');
+			const payload: IAuthPayload = JWT.verify(request.session.jwt, `${EnvVariable.JWT_TOKEN}`) as IAuthPayload;
+			request.currentUser = payload;
+			next();
+		} catch (error) {
+			console.log('error: ', error);
+			throw new NotAuthorizedError('Token not avilable. Please login again', 'Gateway service verifyuser method error');
+		}
+	}
 
+	// check authentication
+	public static checkAuthentication(request: Request, res: Response, next: NextFunction): void {
+		try {
+			if (!request?.currentUser)
+				throw new BadRequestError('Authentication is required to access this route', 'gateway service check authentication method error');
 
-export class AuthMiddleware{
-    public static verifyUser(request:Request,res:Response,next:NextFunction):void{
-        try{
-            if(!request.session?.jwt) throw new NotAuthorizedError("Token not avilable. Please login again","Gateway service verifyuser method error");
-            const payload:IAuthPayload = JWT.verify(request.session.jwt,`${EnvVariable.JWT_TOKEN}`) as IAuthPayload;
-            request.currentUser = payload;
-            next();
-        }catch(error){
-            console.log('error: ', error);
-            throw new NotAuthorizedError("Token not avilable. Please login again","Gateway service verifyuser method error");
-
-        }
-        
-    }
-
-    // check authentication 
-    public static checkAuthentication(request:Request,res:Response,next:NextFunction):void{
-        try{
-            if(!request?.currentUser) throw new BadRequestError("Authentication is required to access this route","gateway service check authentication method error")
-                
-            next();
-        }catch(error){
-            console.log('error: ', error);
-            throw new NotAuthorizedError("Token not avilable. Please login again","Gateway service verifyuser method error");
-
-        }
-
-    }
-    // attach authtoken
-    public static attachAuthToken(request:Request,res:Response,next:NextFunction):void{
-        if(request.session?.jwt){
-            AuthService.axiosAuthInstance.defaults.headers["Authorization"] = `Bearer ${request.session.jwt}`
-        }
-        next();
-    }
-
+			next();
+		} catch (error) {
+			console.log('error: ', error);
+			throw new NotAuthorizedError('Token not avilable. Please login again', 'Gateway service verifyuser method error');
+		}
+	}
+	// attach authtoken
+	public static attachAuthToken(request: Request, res: Response, next: NextFunction): void {
+		if (request.session?.jwt) {
+			AuthService.axiosAuthInstance.defaults.headers['Authorization'] = `Bearer ${request.session.jwt}`;
+		}
+		next();
+	}
 }
-

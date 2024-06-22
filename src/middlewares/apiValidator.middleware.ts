@@ -1,4 +1,4 @@
-import { BadRequestError } from '@manoj19-github/microservice_shared';
+import { BadRequestError } from '@manoj19-github/microservice_shared_lib';
 import { sanitize } from 'class-sanitizer';
 import { plainToInstance } from 'class-transformer';
 import { ValidationError, validate } from 'class-validator';
@@ -11,16 +11,16 @@ const DTOValidationMiddleware =
 		validate(dtoObject, { skipMissingProperties })
 			.then((errors: ValidationError[]) => {
 				if (errors.length > 0) {
-                    return new BadRequestError("invalid input",JSON.stringify(errors));
+					return new BadRequestError('invalid input', JSON.stringify(errors));
 				} else {
 					sanitize(dtoObject);
 					req.body = dtoObject;
 					next();
 				}
 			})
-			.catch((errors:any) => {
+			.catch((errors: any) => {
 				console.log('errors:', errors);
-                return new BadRequestError("invalid input",JSON.stringify(errors));
+				return new BadRequestError('invalid input', JSON.stringify(errors));
 				// return new HttpException(400, JSON.stringify(errors));
 			});
 	};

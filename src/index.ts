@@ -15,7 +15,7 @@ import { checkElasticSearchConnection } from './config/elasticSearch.config';
 
 // import { Channel } from 'amqplib';
 
-import { winstonLogger } from '@manoj19-github/microservice_shared';
+import { winstonLogger } from '@manoj19-github/microservice_shared_lib';
 import hpp from 'hpp';
 import compression from 'compression';
 import { AuthMiddleware } from './middlewares/auth-middleware';
@@ -38,9 +38,9 @@ class APIGatewayServer {
 		this.app.use(
 			cookieSession({
 				name: 'session',
-				keys: [`${EnvVariable.SECRET_KEY_ONE}`,`${EnvVariable.SECRET_KEY_TWO}`],
+				keys: [`${EnvVariable.SECRET_KEY_ONE}`, `${EnvVariable.SECRET_KEY_TWO}`],
 				maxAge: 60 * 60 * 60 * 24,
-				secure: EnvVariable.NODE_ENV !=="development" /*ok*/
+				secure: EnvVariable.NODE_ENV !== 'development' /*ok*/
 			})
 		); // max age is 1 day or 24 hour
 		this.app.use(hpp());
@@ -48,15 +48,12 @@ class APIGatewayServer {
 
 		this.app.use(helmet());
 		this.app.use(morgan('dev'));
-		this.app.use(AuthMiddleware.attachAuthToken)
+		this.app.use(AuthMiddleware.attachAuthToken);
 	}
-	private standardMiddleware():void{
+	private standardMiddleware(): void {
 		this.app.use(compression());
 		this.app.use(urlencoded({ extended: true, limit: '200mb' }));
 		this.app.use(json({ limit: '200mb' }));
-
-		
-
 	}
 	private routesMiddleware(): void {
 		this.app.get('/gateway-health', (req: Request, res: Response) => {
@@ -95,7 +92,7 @@ class APIGatewayServer {
 
 	// }
 	private async startElasticSearch(): Promise<void> {
-		await checkElasticSearchConnection()
+		await checkElasticSearchConnection();
 	}
 	private startServer(): void {
 		try {

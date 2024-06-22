@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../services/authService.service';
 import { AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
-import { IAuthDocument } from '@manoj19-github/microservice_shared';
+import { IAuthDocument } from '@manoj19-github/microservice_shared_lib';
 
 export class AuthController {
 	public static async signup(request: Request, response: Response, next: NextFunction): Promise<void> {
