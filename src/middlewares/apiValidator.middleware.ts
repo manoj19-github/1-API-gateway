@@ -4,7 +4,7 @@ import { plainToInstance } from 'class-transformer';
 import { ValidationError, validate } from 'class-validator';
 import { NextFunction, Request, Response } from 'express';
 
-const DTOValidationMiddleware =
+const payloadValidator =
 	(type: any, skipMissingProperties: boolean = false) =>
 	(req: Request, res: Response, next: NextFunction) => {
 		const dtoObject = plainToInstance(type, req.body);
@@ -24,4 +24,4 @@ const DTOValidationMiddleware =
 				// return new HttpException(400, JSON.stringify(errors));
 			});
 	};
-export default DTOValidationMiddleware;
+export default payloadValidator;

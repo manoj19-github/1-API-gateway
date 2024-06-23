@@ -3,7 +3,7 @@ import { AuthController } from '../controllers/auth.controller';
 import { Routes } from '../interfaces/routes.interface';
 import { Router } from 'express';
 import { EmailDTO, SignupDTO } from '../dtos/signup.dtos';
-import DTOValidationMiddleware from '../middlewares/apiValidator.middleware';
+import payloadValidator from '../middlewares/apiValidator.middleware';
 import { ResetPasswordDTO, changePasswordDTO, loginDTO } from '../dtos/signin.dto';
 
 export class AuthRoutes implements Routes {
@@ -13,11 +13,11 @@ export class AuthRoutes implements Routes {
 		this.initializeRoutes();
 	}
 	private initializeRoutes(): void {
-		this.router.post(`${this.path}/signup`, DTOValidationMiddleware(SignupDTO), AuthController.signup);
-		this.router.post(`${this.path}/signin`, DTOValidationMiddleware(loginDTO), AuthController.signin);
+		this.router.post(`${this.path}/signup`, payloadValidator(SignupDTO), AuthController.signup);
+		this.router.post(`${this.path}/signin`, payloadValidator(loginDTO), AuthController.signin);
 		this.router.put(`${this.path}/verify-email`, AuthController.verifyEmail);
-		this.router.put(`${this.path}/forgot-password`, DTOValidationMiddleware(EmailDTO), AuthController.forgotPassword);
-		this.router.put(`${this.path}/reset-password/:token`, DTOValidationMiddleware(ResetPasswordDTO), AuthController.resetPassword);
-		this.router.put(`${this.path}/change-password`, DTOValidationMiddleware(changePasswordDTO), AuthController.changePassword);
+		this.router.put(`${this.path}/forgot-password`, payloadValidator(EmailDTO), AuthController.forgotPassword);
+		this.router.put(`${this.path}/reset-password/:token`, payloadValidator(ResetPasswordDTO), AuthController.resetPassword);
+		this.router.put(`${this.path}/change-password`, payloadValidator(changePasswordDTO), AuthController.changePassword);
 	}
 }
