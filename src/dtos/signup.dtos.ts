@@ -15,35 +15,34 @@ import {
 	ValidateNested
 } from 'class-validator';
 
-export class SignupDTO{
-    @IsString()
-    @IsNotEmpty()
-    @MaxLength(12)
-	@MinLength(4)
-    username:string|undefined;
+export class SignupDTO {
 	@IsString()
-    @IsNotEmpty()
-    @MaxLength(12)
+	@IsNotEmpty()
+	@MaxLength(12)
 	@MinLength(4)
-    password:string|undefined;
+	username: string | undefined;
 	@IsString()
-    @IsNotEmpty()
-    country:string|undefined;
+	@IsNotEmpty()
+	@MaxLength(12)
+	@MinLength(4)
+	password: string | undefined;
+	@IsString()
+	@IsNotEmpty()
+	country: string | undefined;
 	@IsEmail({}, { message: 'Provided Email is not valid' })
 	@IsNotEmpty()
 	@Trim()
 	email: string | undefined;
 	@IsString()
-    @IsNotEmpty()
-	profilePicture:string | undefined;
+	@IsNotEmpty()
+	profilePicture: string | undefined;
 }
 
-export class EmailDTO{
+export class EmailDTO {
 	@IsEmail({}, { message: 'Provided Email is not valid' })
 	@IsNotEmpty()
 	@Trim()
 	email: string | undefined;
-
 }
 
 //@Validate(CustomTextLength, {

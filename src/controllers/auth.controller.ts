@@ -11,7 +11,6 @@ export class AuthController {
 			request.session = { jwt: axiosResponse.data.token };
 			response.status(StatusCodes.CREATED).json({ message: axiosResponse.data.message, user: axiosResponse.data.user });
 		} catch (error) {
-			console.log('auth controller signup method: ', error);
 			next(error);
 		}
 	}
@@ -21,7 +20,7 @@ export class AuthController {
 			request.session = { jwt: axiosResponse.data.token };
 			response.status(StatusCodes.CREATED).json({ message: axiosResponse.data.message, user: axiosResponse.data.user });
 		} catch (error) {
-			console.log('auth controller create method: ', error);
+
 			next(error);
 		}
 	}
@@ -30,7 +29,7 @@ export class AuthController {
 			const axiosResponse: AxiosResponse = await AuthService.verifyEmail(request.body.token);
 			response.status(StatusCodes.OK).json({ message: axiosResponse.data.message, user: axiosResponse.data.user });
 		} catch (error) {
-			console.log('auth controller create method: ', error);
+
 			next(error);
 		}
 	}
