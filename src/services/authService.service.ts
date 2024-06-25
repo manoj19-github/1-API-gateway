@@ -8,7 +8,7 @@ export class AuthService {
 	public static axiosService: AxiosService = new AxiosService(`${EnvVariable.AUTH_BASE_URL}/api/v1/auth`, `auth`);
 	public static axiosAuthInstance = AuthService.axiosService.axios;
 	public static async getCurrentUser(): Promise<AxiosResponse> {
-		return await AuthService.axiosAuthInstance.get(`/currentuser`);
+		return await AuthService.axiosAuthInstance.get(`/current-user`);
 	}
 	public static async getRefreshToken(username: string): Promise<AxiosResponse> {
 		return await AuthService.axiosAuthInstance.get(`/refresh-token/${username}`);

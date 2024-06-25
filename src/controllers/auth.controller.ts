@@ -22,7 +22,6 @@ export class AuthController {
 				.status(StatusCodes.CREATED)
 				.json({ message: axiosResponse.data.message, user: axiosResponse.data.user, token: axiosResponse.data.token });
 		} catch (error) {
-
 			next(error);
 		}
 	}
@@ -31,7 +30,6 @@ export class AuthController {
 			const axiosResponse: AxiosResponse = await AuthService.verifyEmail(request.body.token);
 			response.status(StatusCodes.OK).json({ message: axiosResponse.data.message, user: axiosResponse.data.user });
 		} catch (error) {
-
 			next(error);
 		}
 	}
@@ -60,6 +58,27 @@ export class AuthController {
 			const result: AxiosResponse = await AuthService.changePassword({ currentPassword, newPassword });
 			return response.status(StatusCodes.OK).json({
 				message: result.data.message
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+	public static async getCurrentUser(request: Request, response: Response, next: NextFunction) {
+		try {
+			const result: AxiosResponse = await AuthService.getCurrentUser();
+			return response.status(StatusCodes.OK).json({
+				...result.data
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+	public static async resendEmail(request: Request, response: Response, next: NextFunction) {
+		try {
+			const { email, userId } = request.body;
+			const result: AxiosResponse = await AuthService.resendEmail({ userId, email });
+			return response.status(StatusCodes.OK).json({
+				...result.data
 			});
 		} catch (error) {
 			next(error);
