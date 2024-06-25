@@ -18,7 +18,9 @@ export class AuthController {
 		try {
 			const axiosResponse: AxiosResponse = await AuthService.signin(request.body);
 			request.session = { jwt: axiosResponse.data.token };
-			response.status(StatusCodes.CREATED).json({ message: axiosResponse.data.message, user: axiosResponse.data.user });
+			response
+				.status(StatusCodes.CREATED)
+				.json({ message: axiosResponse.data.message, user: axiosResponse.data.user, token: axiosResponse.data.token });
 		} catch (error) {
 
 			next(error);
