@@ -5,6 +5,7 @@ import { Router } from 'express';
 import { EmailDTO, SignupDTO } from '../dtos/signup.dtos';
 import payloadValidator from '../middlewares/apiValidator.middleware';
 import { ResetPasswordDTO, changePasswordDTO, loginDTO } from '../dtos/signin.dto';
+import { AuthMiddleware } from '../middlewares/auth-middleware';
 
 export class AuthRoutes implements Routes {
 	path = '/auth';
@@ -18,6 +19,6 @@ export class AuthRoutes implements Routes {
 		this.router.put(`${this.path}/verify-email`, AuthController.verifyEmail);
 		this.router.put(`${this.path}/forgot-password`, payloadValidator(EmailDTO), AuthController.forgotPassword);
 		this.router.put(`${this.path}/reset-password/:token`, payloadValidator(ResetPasswordDTO), AuthController.resetPassword);
-		this.router.put(`${this.path}/change-password`, payloadValidator(changePasswordDTO), AuthController.changePassword);
+		this.router.put(`${this.path}/change-password`, payloadValidator(changePasswordDTO),AuthMiddleware.verifyUser, AuthController.changePassword);
 	}
 }
